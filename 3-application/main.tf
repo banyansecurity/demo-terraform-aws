@@ -22,8 +22,7 @@ provider "aws" {
 resource "aws_instance" "devops_demo" {
   ami           = "ami-00ee4df451840fa9d"
   instance_type = "t2.micro"
-  key_name = "WorkshopKeyPair"
-  # Carlos - this varies depending on region
+  key_name = var.ssh_key
   subnet_id		= "${module.network.private_subnet}"
   vpc_security_group_ids	= "${module.network.private_network_security_group}"
   associate_public_ip_address = false
