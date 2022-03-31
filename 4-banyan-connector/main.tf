@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "aws_connector" {
-  source                 = "../terraform-aws-banyan-connector"
+  source                 = "../../terraform-aws-banyan-connector"
   vpc_id                 = "vpc-123"
   subnet_id              = "subnet-123"
   ssh_key_name           = "my-key"
