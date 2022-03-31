@@ -13,7 +13,7 @@ variable "availability_zone" {
 variable "aws_profile" {
   description = "AWS profile used"
   type        = string
-  default     = "csacct"
+  default     = "default"
 }
 
 variable "vpc_cidr_block" {
