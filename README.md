@@ -111,7 +111,7 @@ This demo uses Terraform. Follow the [getting started in AWS tutorial](https://l
 
 This demo shows you to how to use Banyan Security Zero Trust Remote Access. If you don't have a Banyan account, sign up for a [free Banyan account](https://www.banyansecurity.io/team-edition-signup/).
 
-Select and note your Org name. Navigate to the API Keys section in the Banyan Command Center console (https://team.console.banyanops.com/app/settings/org/api-keys) and create an admin API key.
+Note your Org name. Navigate to the API Keys section in the Banyan Command Center console and [create an admin API key](https://docs.banyansecurity.io/docs/banyan-components/command-center/api-keys/). Also, [install the Banyan Desktop App on your device](https://support.banyanops.com/support/solutions/folders/44000931532).
 
 
 
