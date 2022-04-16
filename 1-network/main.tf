@@ -5,126 +5,111 @@ terraform {
       version = "~> 3.27"
     }
   }
-
-  required_version = ">= 0.14.9"
 }
 
 provider "aws" {
-  region  = var.aws_region
-  profile = var.aws_profile
-
+  region  = var.region
+  profile = var.profile
 }
 
-# Creating a VPC
-resource "aws_vpc" "workshop_vpc" {
+resource "aws_vpc" "_" {
+  cidr_block = var.cidr_vpc
   
-  # IP Range for the VPC
-  cidr_block = var.vpc_cidr_block
-  
-  # Enabling automatic hostname assigning
   enable_dns_hostnames = true
   tags = {
-    Name = "workshop_vpc"
+    Name = "${var.name_prefix}-vpc"
   }
 }
 
-resource "aws_subnet" "public_subnet" {
-  vpc_id            = aws_vpc.workshop_vpc.id
-  cidr_block        = var.public_subnet
-  availability_zone = var.availability_zone
+resource "aws_subnet" "public" {
+  vpc_id            = aws_vpc._.id
+  cidr_block        = var.cidr_public_subnet
 
   tags = {
-    Name = "Workshop - Public Subnet"
+    Name = "${var.name_prefix}-public_subnet"
   }
 }
 
-resource "aws_subnet" "private_subnet" {
-  vpc_id            = aws_vpc.workshop_vpc.id
-  cidr_block        = var.private_subnet
-  availability_zone = var.availability_zone
+resource "aws_subnet" "private" {
+  vpc_id            = aws_vpc._.id
+  cidr_block        = var.cidr_private_subnet
 
   tags = {
-    Name = "Workshop - Private Subnet"
+    Name = "${var.name_prefix}-private_subnet"
   }
 }
 
-resource "aws_internet_gateway" "workshop_ig" {
-  vpc_id = aws_vpc.workshop_vpc.id
+resource "aws_internet_gateway" "_" {
+  vpc_id = aws_vpc._.id
 
   tags = {
-    Name = "Some Internet Gateway"
+    Name = "${var.name_prefix}-internet_gateway"
   }
 }
 
-resource "aws_route_table" "public_rt" {
-  vpc_id = aws_vpc.workshop_vpc.id
+resource "aws_route_table" "ig" {
+  vpc_id = aws_vpc._.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.workshop_ig.id
+    gateway_id = aws_internet_gateway._.id
   }
 
   route {
     ipv6_cidr_block = "::/0"
-    gateway_id      = aws_internet_gateway.workshop_ig.id
+    gateway_id      = aws_internet_gateway._.id
   }
 
   tags = {
-    Name = "Public Route Table"
+    Name = "${var.name_prefix}-route_table_ig"
   }
 }
 
-resource "aws_eip" "elastic_ip" {
+resource "aws_route_table_association" "ig" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.ig.id
+}
+
+resource "aws_eip" "nat" {
   vpc      = true
 }
 
-resource "aws_nat_gateway" "workshop_nat_gateway" {
-  allocation_id = aws_eip.elastic_ip.id
-  subnet_id     = aws_subnet.public_subnet.id
+resource "aws_nat_gateway" "_" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public.id
 
   tags = {
-    Name = "workshop nat-gateway"
+    Name = "${var.name_prefix}-nat_gateway"
   }
 }
   
-resource "aws_route_table" "nat_rt" {
-  vpc_id = aws_vpc.workshop_vpc.id
+resource "aws_route_table" "nat" {
+  vpc_id = aws_vpc._.id
+
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.workshop_nat_gateway.id
+    gateway_id = aws_nat_gateway._.id
   }
 
   tags = {
-    Name = "NAT-route-table"
+    Name = "${var.name_prefix}-route_table_nat"
   }
 }
 
-resource "aws_route_table_association" "public_1_rt_a" {
-  subnet_id      = aws_subnet.public_subnet.id
-  route_table_id = aws_route_table.public_rt.id
+resource "aws_route_table_association" "nat" {
+  subnet_id		 = aws_subnet.private.id
+  route_table_id = aws_route_table.nat.id
 }
 
-resource "aws_route_table_association" "public_1_rt_b" {
-  subnet_id		 = aws_subnet.private_subnet.id
-  route_table_id = aws_route_table.nat_rt.id
-}
-
-resource "aws_security_group" "web_sg" {
-  name   = "HTTP and SSH"
-  vpc_id = aws_vpc.workshop_vpc.id
+resource "aws_security_group" "vpc_sg" {
+  name   = "${var.name_prefix}-vpc_sg"
+  vpc_id = aws_vpc._.id
 
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = [var.cidr_vpc]
   }
 
   egress {
@@ -133,23 +118,8 @@ resource "aws_security_group" "web_sg" {
     protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
 
-resource "aws_security_group" "private_sg" {
-  name   = "Workshop Private SG"
-  vpc_id = aws_vpc.workshop_vpc.id
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = [var.vpc_cidr_block]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  tags = {
+    Name = "${var.name_prefix}-vpc_sg"
+  }  
 }

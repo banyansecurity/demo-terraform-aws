@@ -1,35 +1,34 @@
-variable "aws_region" {
+variable "name_prefix" {
+  description = "String to be added in front of all AWS object names"
+  type        = string
+}
+
+variable "region" {
   description = "AWS region"
   type        = string
   default     = "us-west-2"
 }
 
-variable "availability_zone" {
-  description = "Availability Zone for subnets"
-  type        = string
-  default     = "us-west-2a"
-}
-
-variable "aws_profile" {
-  description = "AWS profile used"
+variable "profile" {
+  description = "AWS profile"
   type        = string
   default     = "default"
 }
 
-variable "vpc_cidr_block" {
+variable "cidr_vpc" {
   description = "CIDR block for VPC"
   type        = string
   default     = "192.168.0.0/16"
 }
 
-variable "public_subnet" {
-  description = "Public Subnet"
+variable "cidr_public_subnet" {
+  description = "CIDR block for public subnet"
   type        = string
   default     = "192.168.0.0/24"
 }
 
-variable "private_subnet" {
-  description = "Private Subnet"
+variable "cidr_private_subnet" {
+  description = "CIDR block for private subnet"
   type        = string
   default     = "192.168.1.0/24"
 }

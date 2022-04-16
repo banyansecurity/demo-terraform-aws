@@ -1,28 +1,15 @@
 output "vpc_id" {
-  description = "ID of project VPC"
-  value       = "${aws_vpc.workshop_vpc.id}"
+  value       = aws_vpc._.id
 }
 
-output "profile" {
-  description = "AWS Profile"
-  value       = "${var.aws_profile}"
+output "public_subnet_id" {
+  value       = aws_subnet.public.id
 }
 
-output "private_subnet" {
-  description = "Private Subnet"
-  value       = "${aws_subnet.private_subnet.id}"
+output "private_subnet_id" {
+  value       = aws_subnet.private.id
 }
 
-output "public_subnet" {
-  description = "Public Subnet"
-  value       = aws_subnet.public_subnet.id
-}
-
-output "private_network_security_group" {
-  description = "Private Subnet Security Group"
-  value       = ["${aws_security_group.private_sg.id}"]
-}
-
-output "region" {
-  value       = "${var.aws_region}"
+output "vpc_security_group_id" {
+  value       = aws_security_group.vpc_sg.id
 }
