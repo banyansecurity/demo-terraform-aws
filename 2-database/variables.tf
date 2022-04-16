@@ -1,4 +1,3 @@
-
 variable "name_prefix" {
   description = "String to be added in front of all AWS object names"
   type        = string
@@ -23,10 +22,5 @@ variable "subnet_id" {
 
 variable "security_group_id" {
   description = "Security Group"
-  type        = string
-}
-
-variable "ssh_key_name" {
-  description = "SSH key"
   type        = string
 }
