@@ -9,6 +9,7 @@ module "database" {
   name_prefix = local.name_prefix
   region = local.region
   subnet_id = module.network.private_subnet_id
+  subnet_2_id = module.network.private_2_subnet_id
   security_group_id = module.network.vpc_security_group_id
 }
 

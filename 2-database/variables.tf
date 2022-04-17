@@ -20,6 +20,11 @@ variable "subnet_id" {
   type        = string
 }
 
+variable "subnet_2_id" {
+  description = "Subnet ID"
+  type        = string
+}
+
 variable "security_group_id" {
   description = "Security Group"
   type        = string
