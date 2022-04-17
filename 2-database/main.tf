@@ -19,6 +19,7 @@ resource "aws_db_subnet_group" "_" {
 }
 
 resource "aws_db_instance" "_" {
+  identifier                = "${var.name_prefix}-db"
   db_subnet_group_name      = aws_db_subnet_group._.id
   vpc_security_group_ids    = [var.security_group_id]
 
