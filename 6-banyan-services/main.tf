@@ -25,7 +25,7 @@ resource "banyan_service_web" "web" {
 resource "banyan_service_infra_ssh" "ssh" {
   name           = "${var.name_prefix}-ssh"
   connector      = var.connector_name
-  domain         = "${var.name_prefix}-web.${var.banyan_org}.banyanops.com"
+  domain         = "${var.name_prefix}-ssh.${var.banyan_org}.banyanops.com"
   backend_domain = var.application_address
   backend_port   = 22
 }
@@ -33,7 +33,7 @@ resource "banyan_service_infra_ssh" "ssh" {
 resource "banyan_service_infra_db" "db" {
   name           = "${var.name_prefix}-db"
   connector      = var.connector_name
-  domain         = "${var.name_prefix}-web.${var.banyan_org}.banyanops.com"
+  domain         = "${var.name_prefix}-db.${var.banyan_org}.banyanops.com"
   backend_domain = var.database_address
   backend_port   = var.database_port
 }

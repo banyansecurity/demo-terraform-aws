@@ -33,7 +33,7 @@ Then, provision all the resources:
 terraform apply
 ```
 
-Provisioning is broken up into 6 steps. You can run just a specific step by specifying during the apply as: `terraform apply -target=module.network`
+Provisioning is broken up into 6 steps; the code is written so can run just a specific step by specifying during the apply as: `terraform apply -target=module.network`
 
 1. **Network** - a new VPC with subnets
 2. **Database** - an RDS instance

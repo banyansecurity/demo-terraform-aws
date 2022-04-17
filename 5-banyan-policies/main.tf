@@ -13,13 +13,13 @@ provider "banyan" {
 }
 
 resource "banyan_role" "test_role" {
-  name        = "test_role"
-  description = "all users"
-  user_group  = ["Everyone"]
+  name        = "${var.name_prefix}-everyone"
+  description = "Everyone"
+  user_group  = ["AllUsers"]
 }
 
-resource "banyan_policy" "web-anyone-high" {
-  name        = "web-policy"
+resource "banyan_policy" "web_everyone_high" {
+  name        = "${var.name_prefix}-web"
   description = "Allows web access to everyone with a high trust level"
   access {
     roles       = ["AllUsers"]
@@ -33,9 +33,9 @@ resource "banyan_policy" "web-anyone-high" {
   disable_tls_client_authentication = true
 }
 
-resource "banyan_policy" "infra-anyone-high" {
-  name        = "infrastructure-policy"
-  description = "some infrastructure policy description"
+resource "banyan_policy" "infra_everyone_high" {
+  name        = "${var.name_prefix}-infra"
+  description = "Allows infra access to everyone with a high trust level"
   access {
     roles       = ["AllUsers"]
     trust_level = "High"
