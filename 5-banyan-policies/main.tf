@@ -2,7 +2,7 @@ terraform {
   required_providers {
     banyan = {
       source  = "banyansecurity/banyan"
-      version = "0.6.1"
+      version = "0.6.2"
     }
   }
 }
@@ -12,9 +12,9 @@ provider "banyan" {
   host        = var.banyan_host
 }
 
-resource "banyan_role" "test_role" {
+resource "banyan_role" "everyone" {
   name        = "${var.name_prefix}-everyone"
-  description = "Everyone"
+  description = "Any authenticated user"
   user_group  = ["AllUsers"]
 }
 
@@ -22,7 +22,7 @@ resource "banyan_policy" "web_everyone_high" {
   name        = "${var.name_prefix}-web"
   description = "Allows web access to everyone with a high trust level"
   access {
-    roles       = ["AllUsers"]
+    roles       = [banyan_role.everyone.name]
     trust_level = "High"
     l7_access {
       resources = ["*"]
@@ -37,7 +37,7 @@ resource "banyan_policy" "infra_everyone_high" {
   name        = "${var.name_prefix}-infra"
   description = "Allows infra access to everyone with a high trust level"
   access {
-    roles       = ["AllUsers"]
+    roles       = [banyan_role.everyone.name]
     trust_level = "High"
   }
   disable_tls_client_authentication = false

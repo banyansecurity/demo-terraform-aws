@@ -24,6 +24,16 @@ variable "connector_name" {
   description = "Name of the Connector"
 }
 
+variable "web_policy_id" {
+  type        = string
+  description = "ID of Banyan web policy"
+}
+
+variable "infra_policy_id" {
+  type        = string
+  description = "ID of Banyan infra policy"
+}
+
 variable "database_address" {
   type        = string
   description = "IP address of database"

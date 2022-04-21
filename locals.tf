@@ -2,6 +2,7 @@ locals {
   name_prefix = "bnn-demo"
 
   region = "us-east-1"
+  profile = "default"
   ssh_key_name = "YOUR_AWS_KEY_NAME"
 
   banyan_host = "https://team.console.banyanops.com/"

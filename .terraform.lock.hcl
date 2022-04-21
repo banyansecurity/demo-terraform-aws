@@ -2,23 +2,23 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/banyansecurity/banyan" {
-  version     = "0.6.1"
-  constraints = "0.6.1"
+  version     = "0.6.2"
+  constraints = "0.6.2"
   hashes = [
-    "h1:y1i+bEb6nB0iyZlYJMBiITu3g+jQBjSy2ATl3prwUXM=",
-    "zh:00f2d3ef88bca197369226872a2fa72cf55d00953825a219ada36a964f1949ef",
-    "zh:10fe44bb7b2da26c18c2953c58809f560fdbf07bf38dbbc68e5cf455b2f93b1a",
-    "zh:38050ed571ecee28dd4ee26ed23407cad88ff7b84054440c67affc825b345bf6",
-    "zh:3a1719b129f881d7a66f781938df8f4bc66da4175d03be57ba1ff34ed8f7d1b9",
-    "zh:5a0c01e5bcba60daac8f0066d985fabbac0d9e46ca4feefb9a53c1543cb569c0",
-    "zh:72655e336779fb6db7a0c0a86cc918bd434512012fbcced20d87d9b687694d79",
-    "zh:828949c2f7219c3ecbdc56529d82799e15af80dc4ea4a542bad8cd90e0f40fc3",
-    "zh:85a0d0ebac00e7f17b8ea0e908dabf1044a02e6afc1d52df72c739d11cac7361",
-    "zh:933fc143a821035bb5a3619da40b260442bdbbc70f66a39fdee67782591fc739",
-    "zh:992e3b889e415a91e7a59d29fce3899f0cc36a827681b6ca62a19019674e7a70",
-    "zh:a49a018b7b745a6d36b78ae5dda703435816259e7275f089ffbfd72a362fce2f",
-    "zh:bb56d3d1284236134f91b383ab7682a0b7a0ea979860060b15a8949868a862cb",
-    "zh:dcc64a5c2d509d286c740cbc243a3b600329913918a02615375fa75c89cf674e",
+    "h1:U5z55w5x49jmgTqrP5RMT3MGrzj8o0rgxb+IBHcdUYI=",
+    "zh:0c950428c9f3279f5fc7ed48b996cec8c46145cc1bf8efd6170ada72e627f9d4",
+    "zh:35c4c26708be38dec0b841dbe7027b8447ac0dbcd7c964172958557d3986c108",
+    "zh:3dcaa03b540f87312889c30e622d8978b7d9f0acd0a7159aa6c4410dad190ec5",
+    "zh:92ec0f12d3f5084491d1c92898c98b382d86e901b72c778e245dc05cd81e0504",
+    "zh:92f2fc7eb0ea2a64c04be00bdea65c6f075dcafe5c56a834d9c53f29ec79452f",
+    "zh:a2d7dc216526822f6c35558909de255660a5a9f9eb4bec4e558eb5d65da7f37e",
+    "zh:a83344616b50df8c8caf11049cebe5db24240129d55aa2cded2a86a24adbcbc3",
+    "zh:c27fcf60d9eb15ed291115866e2837df3fc6777d8e1704b5637509ed7b799813",
+    "zh:cc665dff993ea12b66cfaae4212da03d3db2be0b32bbc8cd80163ada1bbf18b2",
+    "zh:cd84e032e3fba1f3ea96a752b2d84c91b6af7629e7c19aa21e4591cae0480ee6",
+    "zh:d3eb2271c76aa7a78ae891ef02d25f3bec4502f95fb6c620c04ed121aabd30ac",
+    "zh:d5fe9cd377eace40410a1eb17cbceb82461236aeb18de56913dc1e6cd62f9a51",
+    "zh:f85ccec6cde43a807202e66fa8df9eb7b1fcbb8d78502db274c80b7574f06aeb",
   ]
 }
 

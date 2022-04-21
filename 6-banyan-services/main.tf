@@ -2,7 +2,7 @@ terraform {
   required_providers {
     banyan = {
       source  = "banyansecurity/banyan"
-      version = "0.6.1"
+      version = "0.6.2"
     }
   }
 }
@@ -22,6 +22,13 @@ resource "banyan_service_web" "web" {
   backend_tls    = false
 }
 
+resource "banyan_policy_attachment" "web" {
+  attached_to_id   = banyan_service_web.web.id
+  policy_id        = var.web_policy_id
+  attached_to_type = "service"
+  is_enforcing     = true
+}
+
 resource "banyan_service_infra_ssh" "ssh" {
   name           = "${var.name_prefix}-ssh"
   connector      = var.connector_name
@@ -30,10 +37,24 @@ resource "banyan_service_infra_ssh" "ssh" {
   backend_port   = 22
 }
 
+resource "banyan_policy_attachment" "ssh" {
+  attached_to_id   = banyan_service_infra_ssh.ssh.id
+  policy_id        = var.infra_policy_id
+  attached_to_type = "service"
+  is_enforcing     = true
+}
+
 resource "banyan_service_infra_db" "db" {
   name           = "${var.name_prefix}-db"
   connector      = var.connector_name
   domain         = "${var.name_prefix}-db.${var.banyan_org}.banyanops.com"
   backend_domain = var.database_address
   backend_port   = var.database_port
+}
+
+resource "banyan_policy_attachment" "db" {
+  attached_to_id   = banyan_service_infra_db.db.id
+  policy_id        = var.infra_policy_id
+  attached_to_type = "service"
+  is_enforcing     = true  
 }
