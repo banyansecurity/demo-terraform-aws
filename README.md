@@ -47,7 +47,7 @@ This first 3 steps get you a basic but representative AWS environment. The last 
 
 ## Access your AWS resources
 
-To access your AWS resources, open the Banyan App, log in, and click on a given service to connect to it.
+All your deployed AWS resources are in a private subnet with only private IPs. To access your AWS resources from your laptop, open the Banyan App, log in, and click on a given service to connect to it.
 
 ![App](_img/app.png)
 
