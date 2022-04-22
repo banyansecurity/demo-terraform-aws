@@ -1,5 +1,6 @@
 # Banyan Security demo for AWS environments using Terraform
 
+
 ## Prerequisities
 
 To run this demo, you will need the following:
@@ -10,6 +11,7 @@ To run this demo, you will need the following:
 
 For instructions on how to set these up, go to the [Prerequisities Details section](#prerequisities-details).
 
+
 ## Run it
 
 Clone this repo to your machine. Edit the `locals.tf` file with details from your environment.
@@ -19,6 +21,7 @@ locals {
   name_prefix = "bnn-demo"
 
   region = "us-east-1"
+  profile = "default"  
   ssh_key_name = "YOUR_AWS_KEY_NAME"
 
   banyan_host = "https://team.console.banyanops.com/"
@@ -47,7 +50,11 @@ This first 3 steps get you a basic but representative AWS environment. The last 
 
 ## Access your AWS resources
 
-All your deployed AWS resources are in a private subnet with only private IPs. To access your AWS resources from your laptop, open the Banyan App, log in, and click on a given service to connect to it.
+All your deployed AWS resources - EC2 and RDS - are in private subnets with private IPs. They cannot be directly reached from the public internet.
+
+![AWS](_img/aws.png)
+
+To access your AWS resources from your device, open the Banyan App and click on a given service to connect to it.
 
 ![App](_img/app.png)
 
@@ -74,7 +81,7 @@ Last login: Fri Apr 22 03:18:47 2022 from 192.168.1.204
 ubuntu@ip-192-168-1-104:~$
 ``` 
 
-To access your RDS instance, click "Connect" on the DB service `bnn-demo-db`. Then, fire up your favorite MySQL client and connect to your database at `127.0.0.1:8811`, using `banyan:insecure` as the credential:
+To access your RDS instance, click "Connect" on the DB service `bnn-demo-db`. Then, fire up your favorite MySQL client and connect to your database at `127.0.0.1:8811`, using the credentials (`banyan:insecure` ) we configured via Terraform:
 
 ```
 $ mysql --host=127.0.0.1 --port=8811 --user=banyan --password=insecure
@@ -103,7 +110,7 @@ mysql> show databases;
 mysql>
 ```
 
-
+Behind the scenes, Banyan uses [short-lived cryptographic credentials](https://docs.banyansecurity.io/docs/intro/concepts/services/) to connect you to your AWS resources and a [zero trust security model](https://docs.banyansecurity.io/docs/intro/concepts/policies/) to enforce access control policies.
 
 
 ## Prerequisities Details
