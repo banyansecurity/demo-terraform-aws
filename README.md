@@ -33,7 +33,7 @@ Then, provision all the resources:
 terraform apply
 ```
 
-Provisioning is broken up into 6 steps; the code is written so can run just a specific step by specifying during the apply as: `terraform apply -target=module.network`
+Provisioning is broken up into 6 steps; the code is written so you can run just a single step by specifying during the apply as: `terraform apply -target=module.network`
 
 1. **Network** - a new VPC with subnets
 2. **Database** - an RDS instance
@@ -49,7 +49,13 @@ This first 3 steps get you a basic but representative AWS environment. The last 
 
 To access your AWS resources, open the Banyan App and check your services list. Click on a given service to connect to it.
 
-TODO: Need image here.
+![App](img/app.png)
+
+When you click on your web application, it will launch a browser tab and take you the demo site after authentication.
+
+![Demo Website](img/web.png)
+
+
 
 
 
