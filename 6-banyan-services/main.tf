@@ -50,6 +50,7 @@ resource "banyan_service_infra_db" "db" {
   domain         = "${var.name_prefix}-db.${var.banyan_org}.banyanops.com"
   backend_domain = var.database_address
   backend_port   = var.database_port
+  client_banyanproxy_listen_port = 8811
 }
 
 resource "banyan_policy_attachment" "db" {

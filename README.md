@@ -33,7 +33,7 @@ Then, provision all the resources:
 terraform apply
 ```
 
-Provisioning is broken up into 6 steps; the code is written so you can run just a single step by specifying during the apply as: `terraform apply -target=module.network`
+Provisioning is broken up into 6 steps; the code is written so you can run it step-by-step by specifying each step during the apply as: `terraform apply -target=module.network`
 
 1. **Network** - a new VPC with subnets
 2. **Database** - an RDS instance
@@ -47,14 +47,61 @@ This first 3 steps get you a basic but representative AWS environment. The last 
 
 ## Access your AWS resources
 
-To access your AWS resources, open the Banyan App and check your services list. Click on a given service to connect to it.
+To access your AWS resources, open the Banyan App, log in, and click on a given service to connect to it.
 
-![App](img/app.png)
+![App](_img/app.png)
 
-When you click on your web application, it will launch a browser tab and take you the demo site after authentication.
+Clicking "Open" on your web application `bnn-demo-web` will launch a new browser tab and take you the demo site after authentication.
 
-![Demo Website](img/web.png)
+![Demo Website](_img/web.png)
 
+To SSH into the Linux server, click "Connect" on the SSH service `bnn-demo-ssh`. Then run the SSH command with your EC2 key-pair as the credential:
+
+```
+$ ssh -i YOUR_AWS_KEY_NAME ubuntu@bnn-demo-ssh
+Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.13.0-1022-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Apr 22 03:19:02 UTC 2022
+
+...
+
+Last login: Fri Apr 22 03:18:47 2022 from 192.168.1.204
+
+ubuntu@ip-192-168-1-104:~$
+``` 
+
+To access your RDS instance, click "Connect" on the DB service `bnn-demo-db`. Then, fire up your favorite MySQL client and connect to your database at `127.0.0.1:8811`, using `banyan:insecure` as the credential:
+
+```
+$ mysql --host=127.0.0.1 --port=8811 --user=banyan --password=insecure
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1369
+Server version: 5.7.37 Source distribution
+
+...
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| innodb             |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.11 sec)
+
+mysql>
+```
 
 
 
