@@ -1,5 +1,5 @@
 locals {
-  name_prefix = "bnn-demo"
+  name_prefix = "bnn-demo-aws"
 
   region = "us-east-1"
   profile = "default"

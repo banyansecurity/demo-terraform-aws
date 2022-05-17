@@ -13,6 +13,7 @@ provider "aws" {
 }
 
 
+# need 2 private subnets in different AZs for RDS
 resource "aws_db_subnet_group" "_" {
   name       = "${var.name_prefix}-db_subnet_group"
   subnet_ids = [var.subnet_id, var.subnet_2_id]

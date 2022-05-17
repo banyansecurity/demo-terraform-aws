@@ -27,6 +27,24 @@ data "aws_ami" "ubuntu" {
   }
 }
 
+locals {
+  init_script = <<INIT_SCRIPT
+#!/bin/bash
+sudo apt update -y
+sudo apt install -y ca-certificates curl gnupg lsb-release
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+sudo echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update -y
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+export INSTANCE_ID="${var.name_prefix}"
+export PRIVATE_IP="$(hostname -i | awk '{print $1}')"
+docker run -e INSTANCE_ID=$INSTANCE_ID -e PRIVATE_IP=$PRIVATE_IP -p 80:80 gcr.io/banyan-pub/demo-site
+sleep 10
+INIT_SCRIPT
+}
+
 resource "aws_instance" "_" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"  
@@ -39,19 +57,5 @@ resource "aws_instance" "_" {
     Name = "${var.name_prefix}-app"
   }
 
-  user_data = join("", concat([
-    "#!/bin/bash -ex\n",
-    "sudo apt update -y\n",
-    "sudo apt install -y ca-certificates curl gnupg lsb-release\n",
-    "sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg\n",
-    "sudo echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null\n",
-    "sudo apt update -y\n",
-    "sudo apt install -y docker-ce docker-ce-cli containerd.io \n",
-    "sudo systemctl enable docker.service\n",
-    "sudo systemctl enable containerd.service\n",
-    "export INSTANCE_ID=\"${var.name_prefix}\"\n",
-    "export PRIVATE_IP=\"$(hostname -i | awk '{print $1}')\"\n",
-    "docker run -e INSTANCE_ID=$INSTANCE_ID -e PRIVATE_IP=$PRIVATE_IP -p 80:80 gcr.io/banyan-pub/demo-site\n",
-    "sleep 10 && docker logs connector\n"
-  ]))
+  user_data = local.init_script
 }

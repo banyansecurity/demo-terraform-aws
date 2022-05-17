@@ -1,3 +1,7 @@
+locals {
+  connector_name = "${local.name_prefix}-conn"
+}
+
 module "network" {
   source = "./1-network"
   name_prefix = local.name_prefix
@@ -35,7 +39,7 @@ module "banyan-connector" {
   ssh_key_name = local.ssh_key_name
   banyan_host = local.banyan_host
   banyan_api_key = local.banyan_api_key
-  connector_name = "${local.name_prefix}-conn"
+  connector_name = local.connector_name
 }
 
 module "banyan-policies" {
@@ -51,7 +55,7 @@ module "banyan-services" {
   banyan_host = local.banyan_host
   banyan_api_key = local.banyan_api_key
   banyan_org = local.banyan_org
-  connector_name = "${local.name_prefix}-conn"
+  connector_name = local.connector_name
   web_policy_id = module.banyan-policies.web_policy_id
   infra_policy_id = module.banyan-policies.infra_policy_id
   database_address = module.database.address

@@ -1,6 +1,6 @@
 module "aws_connector" {
   source                 = "banyansecurity/banyan-connector/aws"
-  version                = "0.1.1"
+  version                = "0.1.3"
   
   name_prefix            = var.name_prefix
   region                 = var.region  

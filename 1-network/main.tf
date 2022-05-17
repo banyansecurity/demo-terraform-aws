@@ -33,15 +33,18 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc._.id
   cidr_block        = var.cidr_private_subnet
+  availability_zone = "${var.region}a"
 
   tags = {
     Name = "${var.name_prefix}-private_subnet"
   }
 }
 
+# need 2 private subnets in different AZs for RDS
 resource "aws_subnet" "private_2" {
   vpc_id            = aws_vpc._.id
   cidr_block        = var.cidr_private_2_subnet
+  availability_zone = "${var.region}b"
 
   tags = {
     Name = "${var.name_prefix}-private_2_subnet"
